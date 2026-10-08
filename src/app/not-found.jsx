@@ -1,6 +1,12 @@
 import Link from "next/link";
 import React from "react";
 
+export const metadata = {
+  title: {
+    default: "Not Found | Mohammad Mahdi Jerban",
+  },
+};
+
 export default async function NotFound() {
   await new Promise((resolve, reject) => {
     setTimeout(() => {

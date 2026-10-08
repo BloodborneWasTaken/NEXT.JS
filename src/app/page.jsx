@@ -1,5 +1,11 @@
 import React from "react";
 
+export const metadata = {
+  title: {
+    default: "Home | Mohammad Mahdi Jerban",
+  },
+};
+
 export default async function Home() {
   await new Promise((resolve, reject) => {
     setTimeout(() => {

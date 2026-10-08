@@ -1,6 +1,12 @@
 import Link from "next/link";
 import React from "react";
 
+export const metadata = {
+  title: {
+    default: "Nationality | about | Mohammad Mahdi Jerban",
+  },
+};
+
 export default async function Nationality() {
   await new Promise((resolve, reject) => {
     setTimeout(() => {
