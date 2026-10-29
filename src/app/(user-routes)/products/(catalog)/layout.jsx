@@ -1,11 +1,34 @@
 import Link from "next/link";
-import { ReactNode } from "react";
 
 export const metadata = {
   title: {
     default: "Products | Mohammad Mahdi Jerban",
   },
 };
+
+const categories = [
+  "All Products",
+  "Audio",
+  "Accessories",
+  "Wearables",
+  "Gaming",
+  "Monitors",
+];
+
+const statuses = [
+  { label: "Featured", value: "Featured" },
+  { label: "Popular", value: "Popular" },
+  { label: "New Arrivals", value: "New" },
+  { label: "Sale", value: "Sale" },
+  { label: "Best Seller", value: "Best Seller" },
+  { label: "Premium", value: "Premium" },
+];
+
+const availabilityOptions = [
+  { label: "In Stock", value: "In Stock" },
+  { label: "Low Stock", value: "Low Stock" },
+  { label: "Out of Stock", value: "Out of Stock" },
+];
 
 export default function ProductsLayout({ children }) {
   return (
@@ -41,7 +64,7 @@ export default function ProductsLayout({ children }) {
         />
 
         {/* Perspective Grid */}
-        <div className="absolute bottom-[-15%] left-[-10%] h-[55%] w-[120%] [transform:perspective(600px)_rotateX(62deg)] opacity-[0.1]">
+        <div className="absolute bottom-[-15%] left-[-10%] h-[55%] w-[120%] opacity-[0.1] [transform:perspective(600px)_rotateX(62deg)]">
           <div
             className="h-full w-full"
             style={{
@@ -75,17 +98,17 @@ export default function ProductsLayout({ children }) {
       </div>
 
       {/* ================= SIDEBAR ================= */}
-      <aside className="fixed left-6 top-20 z-30 hidden h-[calc(100vh-48px)] w-[290px] lg:block">
-        <div className="group relative flex h-full flex-col overflow-hidden rounded-[30px] border border-white/10 bg-[#05030b]/65 p-5 shadow-[0_0_80px_rgba(168,85,247,0.1)] backdrop-blur-2xl">
+      <aside className="fixed left-6 top-15 z-30 hidden h-[calc(100vh-48px)] w-[290px] lg:block">
+        <div className="group relative flex h-full flex-col overflow-hidden rounded-[30px] border border-white/10 bg-[#05030b]/75 p-5 shadow-[0_0_80px_rgba(168,85,247,0.1)] backdrop-blur-2xl">
           {/* Sidebar Ambient Glow */}
           <div className="pointer-events-none absolute -right-32 -top-32 h-72 w-72 rounded-full bg-purple-600/20 blur-[100px]" />
 
           <div className="pointer-events-none absolute -bottom-32 -left-32 h-72 w-72 rounded-full bg-cyan-500/10 blur-[100px]" />
 
-          {/* Top Cyber Lines */}
+          {/* Top Cyber Line */}
           <div className="absolute left-5 right-5 top-0 h-px bg-gradient-to-r from-transparent via-purple-500/70 to-transparent" />
 
-          {/* ================= SIDEBAR HEADER ================= */}
+          {/* Sidebar Header */}
           <div className="relative mb-5 flex items-center justify-between">
             <div>
               <p className="font-mono text-[8px] uppercase tracking-[0.4em] text-purple-400/60">
@@ -103,182 +126,211 @@ export default function ProductsLayout({ children }) {
               <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_12px_#22d3ee]" />
             </div>
           </div>
-          {/* ================= FILTER CONTENT ================= */}
-          <div className="relative flex-1 space-y-7 overflow-y-auto pr-1 [scrollbar-color:rgba(168,85,247,.25)_transparent] [scrollbar-width:thin]">
-            {/* CATEGORY */}
-            <section>
-              <div className="mb-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]" />
 
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
-                    Category
-                  </span>
-                </div>
+          {/* ================= FILTER FORM ================= */}
+          <form
+            action="/products"
+            method="get"
+            className="relative flex min-h-0 flex-1 flex-col"
+          >
+            <div className="flex-1 space-y-6 overflow-y-auto pr-1 [scrollbar-color:rgba(168,85,247,.25)_transparent] [scrollbar-width:thin]">
+              {/* CATEGORY */}
+              <section>
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-purple-400 shadow-[0_0_8px_#a855f7]" />
 
-                <span className="font-mono text-[8px] text-purple-400/40">
-                  01
-                </span>
-              </div>
-
-              <div className="space-y-1.5">
-                {["All Products", "Technology", "Design", "Development"].map(
-                  (item, index) => (
-                    <div
-                      key={item}
-                      className={`group/item flex cursor-pointer items-center gap-3 rounded-xl border px-3 py-2.5 transition-all duration-300 ${
-                        index === 0
-                          ? "border-purple-400/25 bg-purple-500/[0.07]"
-                          : "border-white/[0.04] bg-white/[0.015] hover:border-purple-400/20 hover:bg-purple-500/[0.04]"
-                      }`}
-                    >
-                      <span
-                        className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
-                          index === 0
-                            ? "bg-purple-400 shadow-[0_0_10px_#a855f7]"
-                            : "bg-white/15 group-hover/item:bg-purple-300"
-                        }`}
-                      />
-
-                      <span
-                        className={`text-xs transition-colors ${
-                          index === 0
-                            ? "text-purple-200"
-                            : "text-white/45 group-hover/item:text-white/75"
-                        }`}
-                      >
-                        {item}
-                      </span>
-
-                      {index === 0 && (
-                        <span className="ml-auto font-mono text-[7px] tracking-widest text-purple-400/50">
-                          ACTIVE
-                        </span>
-                      )}
-                    </div>
-                  ),
-                )}
-              </div>
-            </section>
-
-            {/* PRICE */}
-            <section>
-              <div className="mb-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
-
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
-                    Price Range
-                  </span>
-                </div>
-
-                <span className="font-mono text-[8px] text-cyan-400/40">
-                  02
-                </span>
-              </div>
-
-              <div className="rounded-2xl border border-white/[0.05] bg-white/[0.018] p-4">
-                <div className="mb-4 flex items-center justify-between font-mono text-[9px] text-white/30">
-                  <span>$0</span>
-                  <span>$1000+</span>
-                </div>
-
-                <div className="relative h-1 rounded-full bg-white/[0.08]">
-                  <div className="absolute left-[8%] right-[18%] h-full rounded-full bg-gradient-to-r from-purple-500 via-fuchsia-400 to-cyan-400 shadow-[0_0_12px_rgba(168,85,247,0.6)]" />
-
-                  <span className="absolute left-[8%] top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border border-purple-300/70 bg-[#08040f] shadow-[0_0_12px_rgba(168,85,247,0.7)] transition-transform hover:scale-125" />
-
-                  <span className="absolute right-[18%] top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border border-cyan-300/70 bg-[#08040f] shadow-[0_0_12px_rgba(34,211,238,0.7)] transition-transform hover:scale-125" />
-                </div>
-              </div>
-            </section>
-
-            {/* STATUS */}
-            <section>
-              <div className="mb-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-pink-400 shadow-[0_0_8px_#ec4899]" />
-
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
-                    Status
-                  </span>
-                </div>
-
-                <span className="font-mono text-[8px] text-pink-400/40">
-                  03
-                </span>
-              </div>
-
-              <div className="space-y-1.5">
-                {["Featured", "Popular", "New Arrivals"].map((item, index) => (
-                  <div
-                    key={item}
-                    className="group/item flex cursor-pointer items-center gap-3 rounded-xl border border-white/[0.04] bg-white/[0.015] px-3 py-2.5 transition-all duration-300 hover:border-pink-400/20 hover:bg-pink-500/[0.04]"
-                  >
-                    <div className="flex h-4 w-4 items-center justify-center rounded border border-white/15 transition-all duration-300 group-hover/item:border-pink-400/50">
-                      <div
-                        className={`h-1.5 w-1.5 rounded-sm transition-all duration-300 ${
-                          index === 0
-                            ? "bg-pink-400 shadow-[0_0_8px_#ec4899]"
-                            : "bg-transparent group-hover/item:bg-pink-400/50"
-                        }`}
-                      />
-                    </div>
-
-                    <span className="text-xs text-white/45 transition-colors group-hover/item:text-white/75">
-                      {item}
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
+                      Category
                     </span>
                   </div>
-                ))}
-              </div>
-            </section>
 
-            {/* TAGS */}
-            <section>
-              <div className="mb-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-400 shadow-[0_0_8px_#d946ef]" />
-
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
-                    Tags
+                  <span className="font-mono text-[8px] text-purple-400/40">
+                    01
                   </span>
                 </div>
 
-                <span className="font-mono text-[8px] text-fuchsia-400/40">
-                  04
-                </span>
-              </div>
+                <select
+                  name="category"
+                  defaultValue="All Products"
+                  className="w-full cursor-pointer rounded-xl border border-white/[0.07] bg-[#090611] px-3 py-3 text-xs text-purple-100 outline-none transition-all duration-300 hover:border-purple-400/30 focus:border-purple-400/60 focus:shadow-[0_0_20px_rgba(168,85,247,0.12)]"
+                >
+                  {categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </section>
 
-              <div className="flex flex-wrap gap-2">
-                {["Premium", "Popular", "Modern", "Limited"].map((tag) => (
-                  <div
-                    key={tag}
-                    className="cursor-pointer rounded-lg border border-white/[0.07] bg-white/[0.02] px-3 py-1.5 text-[9px] text-white/35 transition-all duration-300 hover:border-fuchsia-400/30 hover:bg-fuchsia-500/[0.06] hover:text-fuchsia-200 hover:shadow-[0_0_18px_rgba(217,70,239,0.08)]"
-                  >
-                    #{tag}
+              {/* PRICE RANGE */}
+              <section>
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
+
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
+                      Price Range
+                    </span>
                   </div>
-                ))}
-              </div>
-            </section>
 
-            {/* CLEAR FILTERS UI */}
-            <div className="group/clear relative cursor-pointer overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.018] px-4 py-3 text-center transition-all duration-500 hover:border-fuchsia-400/30 hover:bg-fuchsia-500/[0.04]">
-              <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/35 transition-colors group-hover/clear:text-fuchsia-200">
-                Clear All Filters
-              </span>
+                  <span className="font-mono text-[8px] text-cyan-400/40">
+                    02
+                  </span>
+                </div>
 
-              <div className="absolute bottom-0 left-0 h-px w-0 bg-gradient-to-r from-purple-400 to-fuchsia-400 shadow-[0_0_12px_#d946ef] transition-all duration-500 group-hover/clear:w-full" />
+                <div className="rounded-2xl border border-white/[0.05] bg-white/[0.018] p-3.5">
+                  <label
+                    htmlFor="minPrice"
+                    className="mb-1.5 block text-[9px] uppercase tracking-widest text-white/40"
+                  >
+                    Minimum Price ($)
+                  </label>
+
+                  <input
+                    id="minPrice"
+                    type="number"
+                    name="minPrice"
+                    min="0"
+                    max="400"
+                    step="1"
+                    defaultValue="0"
+                    className="mb-4 w-full rounded-lg border border-white/[0.07] bg-black/40 px-3 py-2.5 font-mono text-xs text-purple-200 outline-none transition-all focus:border-purple-400/50 focus:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
+                  />
+
+                  <label
+                    htmlFor="maxPrice"
+                    className="mb-1.5 block text-[9px] uppercase tracking-widest text-white/40"
+                  >
+                    Maximum Price ($)
+                  </label>
+
+                  <input
+                    id="maxPrice"
+                    type="number"
+                    name="maxPrice"
+                    min="0"
+                    max="400"
+                    step="1"
+                    defaultValue="400"
+                    className="w-full rounded-lg border border-white/[0.07] bg-black/40 px-3 py-2.5 font-mono text-xs text-cyan-200 outline-none transition-all focus:border-cyan-400/50 focus:shadow-[0_0_15px_rgba(34,211,238,0.1)]"
+                  />
+
+                  <p className="mt-2 text-[9px] leading-4 text-white/25">
+                    Set the minimum and maximum product price.
+                  </p>
+                </div>
+              </section>
+
+              {/* STATUS */}
+              <section>
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-pink-400 shadow-[0_0_8px_#ec4899]" />
+
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
+                      Status
+                    </span>
+                  </div>
+
+                  <span className="font-mono text-[8px] text-pink-400/40">
+                    03
+                  </span>
+                </div>
+
+                <div className="space-y-1.5">
+                  {statuses.map((status) => (
+                    <label
+                      key={status.value}
+                      className="group/item flex cursor-pointer items-center gap-3 rounded-xl border border-white/[0.04] bg-white/[0.015] px-3 py-2.5 transition-all duration-300 hover:border-pink-400/20 hover:bg-pink-500/[0.04]"
+                    >
+                      <span className="relative flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/15 transition-all duration-300 group-hover/item:border-pink-400/50">
+                        <input
+                          type="checkbox"
+                          name="status"
+                          value={status.value}
+                          className="peer absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                        />
+
+                        <span className="pointer-events-none h-1.5 w-1.5 scale-0 rounded-sm bg-pink-400 shadow-[0_0_8px_#ec4899] transition-transform duration-200 peer-checked:scale-100" />
+                      </span>
+
+                      <span className="text-xs text-white/45 transition-colors group-hover/item:text-white/75">
+                        {status.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </section>
+
+              {/* AVAILABILITY */}
+              <section>
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-400 shadow-[0_0_8px_#d946ef]" />
+
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60">
+                      Availability
+                    </span>
+                  </div>
+
+                  <span className="font-mono text-[8px] text-fuchsia-400/40">
+                    04
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {availabilityOptions.map((option) => (
+                    <label
+                      key={option.value}
+                      className="group/tag flex cursor-pointer items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.02] px-2.5 py-2 text-[9px] text-white/40 transition-all duration-300 hover:border-fuchsia-400/30 hover:bg-fuchsia-500/[0.06] hover:text-fuchsia-200"
+                    >
+                      <input
+                        type="checkbox"
+                        name="availability"
+                        value={option.value}
+                        className="accent-fuchsia-400"
+                      />
+
+                      {option.label}
+                    </label>
+                  ))}
+                </div>
+              </section>
             </div>
-          </div>
 
-          {/* ================= SIDEBAR FOOTER ================= */}
-          <div className="relative mt-5 flex items-center justify-between border-t border-white/[0.06] pt-4">
+            {/* APPLY FILTERS */}
+            <div className="relative mt-4 space-y-2 border-t border-white/[0.06] pt-4">
+              <button
+                type="submit"
+                className="group/apply relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-purple-600 via-fuchsia-600 to-cyan-500 bg-[length:200%_100%] px-4 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-white shadow-[0_0_25px_rgba(168,85,247,0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_35px_rgba(168,85,247,0.35)] [animation:buttonGradient_5s_ease_infinite]"
+              >
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover/apply:translate-x-full" />
+
+                <span className="relative">Apply Filters →</span>
+              </button>
+
+              <Link
+                href="/products"
+                className="group/clear relative block w-full overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.018] px-4 py-3 text-center transition-all duration-300 hover:border-fuchsia-400/30 hover:bg-fuchsia-500/[0.04]"
+              >
+                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/35 transition-colors group-hover/clear:text-fuchsia-200">
+                  Clear All Filters
+                </span>
+
+                <span className="absolute bottom-0 left-0 h-px w-0 bg-gradient-to-r from-purple-400 to-fuchsia-400 shadow-[0_0_12px_#d946ef] transition-all duration-500 group-hover/clear:w-full" />
+              </Link>
+            </div>
+          </form>
+
+          {/* SIDEBAR FOOTER */}
+          <div className="relative mt-4 flex items-center justify-between border-t border-white/[0.06] pt-4">
             <div>
               <p className="font-mono text-[7px] uppercase tracking-[0.3em] text-white/20">
                 Filter Interface
               </p>
 
-              <p className="mt-1 font-mono text-[8px] text-cyan-400/30">
+              <p className="mt-1 font-mono text-[8px] text-cyan-400/50">
                 SYSTEM READY
               </p>
             </div>
@@ -304,33 +356,27 @@ export default function ProductsLayout({ children }) {
       {/* ================= ANIMATIONS ================= */}
       <style>{`
         @keyframes orbOne {
-          0%,
-          100% {
+          0%, 100% {
             transform: translate(0, 0) scale(1);
           }
-
           50% {
             transform: translate(90px, 60px) scale(1.15);
           }
         }
 
         @keyframes orbTwo {
-          0%,
-          100% {
+          0%, 100% {
             transform: translate(0, 0) scale(1);
           }
-
           50% {
             transform: translate(-80px, -70px) scale(1.12);
           }
         }
 
         @keyframes orbThree {
-          0%,
-          100% {
+          0%, 100% {
             transform: translate(0, 0) scale(1);
           }
-
           50% {
             transform: translate(70px, -60px) scale(1.1);
           }
@@ -341,15 +387,9 @@ export default function ProductsLayout({ children }) {
             transform: translateY(-10vh);
             opacity: 0;
           }
-
-          10% {
+          10%, 90% {
             opacity: 1;
           }
-
-          90% {
-            opacity: 1;
-          }
-
           100% {
             transform: translateY(110vh);
             opacity: 0;
@@ -357,12 +397,10 @@ export default function ProductsLayout({ children }) {
         }
 
         @keyframes particleOne {
-          0%,
-          100% {
+          0%, 100% {
             transform: translate(0, 0);
             opacity: 0.2;
           }
-
           50% {
             transform: translate(35px, -45px);
             opacity: 1;
@@ -370,12 +408,10 @@ export default function ProductsLayout({ children }) {
         }
 
         @keyframes particleTwo {
-          0%,
-          100% {
+          0%, 100% {
             transform: translate(0, 0);
             opacity: 0.25;
           }
-
           50% {
             transform: translate(-30px, -55px);
             opacity: 1;
@@ -383,15 +419,22 @@ export default function ProductsLayout({ children }) {
         }
 
         @keyframes particleThree {
-          0%,
-          100% {
+          0%, 100% {
             transform: translate(0, 0);
             opacity: 0.2;
           }
-
           50% {
             transform: translate(25px, 40px);
             opacity: 1;
+          }
+        }
+
+        @keyframes buttonGradient {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
           }
         }
 
@@ -410,6 +453,14 @@ export default function ProductsLayout({ children }) {
 
         ::-webkit-scrollbar-thumb:hover {
           background: rgba(34, 211, 238, 0.4);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            scroll-behavior: auto !important;
+          }
         }
       `}</style>
     </div>
